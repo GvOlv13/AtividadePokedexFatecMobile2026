@@ -23,12 +23,12 @@ export default function ButtonWeb({
 
 const styles = StyleSheet.create({
     disabledButton:{
-    backgroundColor: '#2ecc707c',
+        backgroundColor: '#dc0a2d75',
     padding: 15,
     borderRadius: 10,
     },
     button: {
-    backgroundColor: '#2ecc71',
+      backgroundColor: '#dc0a2d',
     padding: 15,
     borderRadius: 10,
     },

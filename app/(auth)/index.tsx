@@ -7,6 +7,7 @@ import Input from '@/components/input'
 import Title from '@/components/title';
 import { Image } from 'react-native';
 import Alert from '@/components/alert/index'
+import LoginBox from '@/components/loginBox';
 
 export default function Index() {
     const [name, setNome] = useState<string>('');
@@ -40,18 +41,11 @@ export default function Index() {
                 style={[{width: 338, height: 110 }]}
                 />
             </View>
-            <View style={styles.login}>
-                <View style={styles.header}>
-                    <Title>Welcome to Pokedex</Title>
-                    <Text>Enter your trainer account to continue</Text>
-                </View>
+  
+                <LoginBox name={name} senha={senha} setNome={setNome} setSenha={setSenha} handleLogin={handleLogin}/>
 
-            <Input placeholder={"Usuario"} value={name} onChangeText={setNome} />
+            
 
-            <Input placeholder={"Senha"} value={senha} onChangeText={setSenha} />
-
-            <Button title='Entrar' onPress={handleLogin} disable={!name || !senha}/>
-            </View>
         </View>
     )
 
@@ -64,30 +58,12 @@ export default function Index() {
             alignItems: 'center'
         },
 
-        login: {
-            backgroundColor: '#ffffff',
-            width: '100%',
-            height: '60%',
-            position: 'absolute',
-            bottom: 0,
-            borderTopLeftRadius: 50,
-            borderTopRightRadius: 50,
-            borderBottomRightRadius: 0,
-            borderBottomLeftRadius: 0,
-            padding: 40,
-            gap: 15
-        },
-
-        header: {
-            display: 'flex',
-            alignItems: 'center',
-        },
-
+        
         logo:{
             height: '40%',
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center'
-        }
+        },
 
     })

@@ -21,50 +21,50 @@ export default function Index() {
         router.push('/');
     }
 
-    const pokemons = [
-        {
-            id: 1,
-            name: 'Pikachu',
-            img: require('@/assets/pokemon/Pikachu.png'),
-            type: ['ELECTRIC'],
-        },
+const pokemons = [
+    {
+        id: 1,
+        name: 'Pikachu',
+        img: require('@/assets/pokemon/Pikachu.png'),
+        type: ['ELECTRIC'],
+    },
 
-        {
-            id: 4,
-            name: 'Charmander',
-            img: require('@/assets/pokemon/Charmander.png'),
-            type: ['FIRE'],
-        },
+    {
+        id: 4,
+        name: 'Charmander',
+        img: require('@/assets/pokemon/Charmander.png'),
+        type: ['FIRE'],
+    },
 
-        {
-            id: 7,
-            name: 'Squirtle',
-            img: require('@/assets/pokemon/Squirtle.png'),
-            type: ['WATER'],
-        },
+    {
+        id: 7,
+        name: 'Squirtle',
+        img: require('@/assets/pokemon/Squirtle.png'),
+        type: ['WATER'],
+    },
 
-        {
-            id: 8,
-            name: 'Bulbassaur',
-            img: require('@/assets/pokemon/Bulbassaur.png'),
-            type: ['WATER'],
-        },
+    {
+        id: 1,
+        name: 'Bulbasaur',
+        img: require('@/assets/pokemon/Bulbassaur.png'),
+        type: ['GRASS', 'POISON'],
+    },
 
-        {
-            id: 9,
-            name: 'Carterpie',
-            img: require('@/assets/pokemon/Carterpie.png'),
-            type: ['WATER'],
-        },
+    {
+        id: 10,
+        name: 'Caterpie',
+        img: require('@/assets/pokemon/Carterpie.png'),
+        type: ['BUG'],
+    },
 
-        {
-            id: 10,
-            name: 'Mewtwo',
-            img: require('@/assets/pokemon/Mewtwo.png'),
-            type: ['WATER'],
-        },
+    {
+        id: 150,
+        name: 'Mewtwo',
+        img: require('@/assets/pokemon/Mewtwo.png'),
+        type: ['PSYCHIC'],
+    },
 
-    ];
+];
 
     const screenWidth = Dimensions.get('window').width;
     const cardWidth = 220;
