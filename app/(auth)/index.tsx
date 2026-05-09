@@ -17,7 +17,7 @@ export default function Index() {
     const { signIn } = useAuth();
 
     function handleLogin(){
-        if(name.trim() == 'Vinicius' && senha.trim() == '123'){
+        if(name.trim() == 'kleber' && senha.trim() == '123'){
             signIn(name)
             console.log("True")
             router.push('/pokedex');
