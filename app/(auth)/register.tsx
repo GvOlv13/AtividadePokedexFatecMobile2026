@@ -7,26 +7,37 @@ import Input from '@/components/input';
 import Title from '@/components/title';
 import Alert from '@/components/alert/index';
 
-export default function Index() {
+export default function Register() {
     const [name, setNome] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
+    const [confirmSenha, setConfirmSenha] = useState<string>('');
     const [visible, setVisible] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
-    const { signIn } = useAuth();
+    const { register } = useAuth();
 
-    async function handleLogin(){
-        if(!name.trim() || !senha.trim()) {
-            setErrorMessage('Login inválido. Preencha todos os campos!');
+    async function handleRegister(){
+        if(!name.trim() || !senha.trim() || !confirmSenha.trim()) {
+            setErrorMessage('Preencha todos os campos!');
+            setVisible(true);
+            return;
+        }
+
+        if(senha.trim() !== confirmSenha.trim()) {
+            setErrorMessage('As senhas não coincidem!');
             setVisible(true);
             return;
         }
 
         try {
-            await signIn(name.trim(), senha.trim());
+            await register(name.trim(), senha.trim());
             router.push('/pokedex');
         } catch(e: any) {
-            setErrorMessage('Credenciais inválidas ou usuário não encontrado.');
+            if (e.response && e.response.data && e.response.data.message) {
+                setErrorMessage(e.response.data.message);
+            } else {
+                setErrorMessage('Não foi possível criar a conta. Tente novamente.');
+            }
             setVisible(true);
         }
     }
@@ -39,27 +50,27 @@ export default function Index() {
                 visible={visible}
                 onClose={() => setVisible(false)}
             />
-            
             <View style={styles.logoContainer} >
                 <Image
                     source={require('@/assets/images/pokedex-logo.png')}
                     style={[{width: 338, height: 110 }]}
                 />
             </View>
-  
+            
             <View style={styles.formContainer}>
                 <View style={styles.formHeader}>
-                    <Title>Welcome to Pokedex</Title>
-                    <Text>Enter your trainer account to continue</Text>
+                    <Title>Crie sua conta</Title>
+                    <Text>Junte-se à Pokedex agora</Text>
                 </View>
 
                 <Input placeholder="Usuario" value={name} onChangeText={setNome} />
                 <Input placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry={true} />
+                <Input placeholder="Confirmar Senha" value={confirmSenha} onChangeText={setConfirmSenha} secureTextEntry={true} />
 
-                <Button title='Entrar' onPress={handleLogin} disable={!name || !senha} />
+                <Button title='Cadastrar' onPress={handleRegister} disable={!name || !senha || !confirmSenha} />
 
-                <TouchableOpacity onPress={() => router.push('/register')} style={styles.linkButton}>
-                    <Text style={styles.linkText}>Não possui conta? Cadastre-se!</Text>
+                <TouchableOpacity onPress={() => router.push('/')} style={styles.linkButton}>
+                    <Text style={styles.linkText}>Já possui uma conta? Faça Login!</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -98,7 +109,7 @@ const styles = StyleSheet.create({
             },
             default: {
                 width: '100%',
-                height: '65%',
+                height: '75%',
                 position: 'absolute',
                 bottom: 0,
                 borderTopLeftRadius: 50,

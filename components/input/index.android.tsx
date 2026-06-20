@@ -6,11 +6,18 @@ import {  TextInput, View, Text, StyleSheet, TouchableOpacity} from 'react-nativ
 export default function InputAndroid({
     placeholder,
     value,
-    onChangeText
+    onChangeText,
+    secureTextEntry
 }: inputProps){
     
     return(
-        <TextInput style={styles.input} placeholder={placeholder} value={value} onChangeText={onChangeText}/>
+        <TextInput 
+            style={styles.input} 
+            placeholder={placeholder} 
+            value={value} 
+            onChangeText={onChangeText}
+            secureTextEntry={secureTextEntry}
+        />
     )
  
 }

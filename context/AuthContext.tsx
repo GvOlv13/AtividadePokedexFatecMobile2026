@@ -1,26 +1,33 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiIntegration, UserProfile } from "@/integration/api";
 
 type AuthContextData = {
-  user: string | null;
+  user: UserProfile | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  signIn: (username: string) => Promise<void>;
+  signIn: (username: string, password?: string) => Promise<void>;
+  register: (username: string, password?: string) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadUser() {
-      const storedUser = await AsyncStorage.getItem("@Auth:user");
+      const storedUserId = await AsyncStorage.getItem("@Auth:userId");
 
-      if (storedUser) {
-        setUser(storedUser);
+      if (storedUserId) {
+        try {
+            const profile = await apiIntegration.getProfile(storedUserId);
+            setUser(profile);
+        } catch(e) {
+            await AsyncStorage.removeItem("@Auth:userId");
+        }
       }
 
       setIsLoading(false);
@@ -29,14 +36,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loadUser();
   }, []);
 
-  async function signIn(username: string) {
-    setUser(username);
-    await AsyncStorage.setItem("@Auth:user", username);
+  async function signIn(username: string, password?: string) {
+    const profile = await apiIntegration.login(username, password || "");
+    setUser(profile);
+    await AsyncStorage.setItem("@Auth:userId", profile.id);
+  }
+
+  async function register(username: string, password?: string) {
+    const profile = await apiIntegration.register(username, password || "");
+    setUser(profile);
+    await AsyncStorage.setItem("@Auth:userId", profile.id);
   }
 
   async function signOut() {
     setUser(null);
-    await AsyncStorage.removeItem("@Auth:user");
+    await AsyncStorage.removeItem("@Auth:userId");
   }
 
   return (
@@ -46,6 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated: !!user,
         isLoading,
         signIn,
+        register,
         signOut,
       }}
     >
