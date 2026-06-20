@@ -40,6 +40,15 @@ export default function AppLayout() {
           fontSize: 20,
         },
         headerTitleAlign: 'center',
+        headerTitle: () => (
+          <View>
+            <Image
+              source={require('@/assets/images/pokedex-logo.png')}
+              style={{ width: 130, height: 40 }}
+              resizeMode="contain"
+            />
+          </View>
+        ),
         headerRight: () => (
           <TouchableOpacity onPress={logout} style={{ marginRight: 15 }}>
             <Ionicons name="log-out-outline" size={24} color="#fff" />
@@ -79,15 +88,6 @@ export default function AppLayout() {
         name="pokedex"
         options={{
           title: 'Pokédex',
-          headerTitle: () => (
-            <View>
-              <Image
-                source={require('@/assets/images/pokedex-logo.png')}
-                style={{ width: 130, height: 40 }}
-                resizeMode="contain"
-              />
-            </View>
-          ),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? "apps" : "apps-outline"} size={size + 2} color={color} />
           ),
